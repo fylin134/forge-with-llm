@@ -1,0 +1,79 @@
+schema: spec-driven
+
+context: |
+  # Forge with LLM — Project Context
+
+  ## What is Forge?
+  Forge is an open-source Magic: The Gathering rules engine and game client (est. 2007).
+  It supports 30,000+ cards, all major formats, and AI opponents across desktop, Android, and iOS.
+  This fork ("forge-with-llm") integrates LLMs to improve AI decision-making, starting with Commander format.
+
+  ## Tech Stack
+  - Language: Java 17+
+  - Build: Maven 3.8.1+ (multi-module)
+  - Testing: TestNG (NOT JUnit)
+  - UI: Java Swing (desktop), Libgdx (mobile)
+  - Dependencies: Guava, Apache Commons, JGraphT, Sentry
+  - Platforms: Windows, macOS, Linux, Android, iOS
+
+  ## Module Architecture
+  - forge-core: Card database, deck structures, utilities (~7K LOC)
+  - forge-game: Complete MTG rules engine, 200+ effect types (~100K LOC)
+  - forge-ai: Rule-based AI with 150+ ability implementations (~29K LOC)
+  - forge-gui / forge-gui-desktop / forge-gui-mobile / forge-gui-android / forge-gui-ios: UI layers
+
+  ## Key AI Architecture
+  - Rule-based AI (not ML), using registry pattern (SpellApiToAi maps ApiType → AI class)
+  - Central controller: AiController.chooseSpellAbilityToPlay() → evaluates lands, spells, abilities
+  - Combat: AiAttackController (attack decisions), AiBlockController (blocking)
+  - Targeting: PlayerControllerAi.chooseSingleEntityForEffect()
+  - 150+ SpellAbilityAi subclasses handle card-specific logic
+  - GameSimulator for what-if analysis (currently broken for multiplayer)
+
+  ## Commander AI Gaps (Primary Focus)
+  - Random opponent selection above 8 life (AiAttackController.java)
+  - Primitive threat assessment (only considers life total)
+  - Broken multiplayer simulation (hardcoded for 2 players)
+  - No politics/diplomacy awareness
+  - No commander damage tracking strategy
+
+  ## LLM Integration Plan
+  - Hybrid architecture: LLM for strategic layer, existing AI for tactical execution
+  - Phase 1: Threat assessment POC
+  - Phase 2: Combat decisions (attack targeting)
+  - Phase 3: Removal targeting
+  - Phase 4: Full strategic layer
+  - Target cost: $0.02–0.25 per game using Claude Haiku
+
+  ## Conventions
+  - Card abilities defined in script files under forge-gui/res/cardsfolder/
+  - AI ability implementations go in forge-ai/src/main/java/forge/ai/ability/
+  - Tests extend AITest base class, use TestNG assertions (AssertJUnit)
+  - No existing LLM integrations — this project is the first
+
+  ## Documentation
+  - docs/forge-core-arch.md, forge-game-arch.md, forge-ai-arch.md — module architecture
+  - docs/Commander_AI_brainstorm_prelim.md — brainstorm and gap analysis
+  - docs/plans/2026-01-02-agentic-llm-commander-ai-research.md — comprehensive research (100+ pages)
+  - docs/Card-scripting-API/ — card script syntax reference
+
+rules:
+  proposal:
+    - Always include a "Non-goals" section to keep scope clear
+    - Reference specific files/classes affected (e.g., AiController.java:1359)
+    - Note which Forge module(s) are impacted (forge-core, forge-game, forge-ai, etc.)
+    - Consider backward compatibility — existing 1v1 AI must not regress
+  design:
+    - Follow Forge's existing patterns (registry-based abilities, Strategy/Visitor patterns)
+    - LLM integrations must be optional — game should work without API keys
+    - Prefer modular design that keeps LLM layer separate from rules engine
+    - Include fallback behavior when LLM is unavailable or too slow
+  specs:
+    - Include concrete acceptance criteria that can be verified with TestNG tests
+    - Specify game state scenarios with board positions, not abstract descriptions
+    - Reference existing card scripts or AI classes as examples where relevant
+  tasks:
+    - Break tasks into chunks completable in a single session
+    - Each task should be independently testable
+    - Specify the target module and key files to modify
+    - Include test expectations (what TestNG test should verify)
