@@ -226,28 +226,26 @@ Individual feature proposals (the "how" and tasks):
 
 ---
 
-## Upstream Sync (2026-03-14, +704 commits)
+## Upstream Sync (current as of 2026-03-28)
 
-Merged 704 upstream commits from Card-Forge/forge. Key findings:
+Branch `master` is fully synced with `Card-Forge/forge` upstream. All previously noted API changes are now merged into the codebase.
 
-**Our integration points are stable:**
-- `choosePreferredDefenderPlayer()` — unchanged (still random above 8 life)
-- `evaluateBoardPosition()` — unchanged (still `life*3 + lands*2`)
+**Integration points — confirmed current status:**
+- `choosePreferredDefenderPlayer()` — still random above 8 life (line ~229 of `AiAttackController.java`)
+- `evaluateBoardPosition()` — still primitive (`life*3 + lands*2`)
 - `GameState.java`, `GameStateEvaluator`, `ThreadUtil`, `AiBlockController` — unchanged
 
-**API changes to account for:**
-- `Card.keywordsToText()` now **private** — use `hasKeyword()` or `getKeywords()` instead
-- `ComputerUtil.handlePlayingSpellAbility` — `Game` param removed (gets it from spell ability)
-- `GlobalAttackRestrictions` — `Integer` (nullable) replaces `int` (-1 sentinel)
-- `CardType.CoreType` enum replaces `String` in type analysis utilities
-- Keyword system refactored to `IKeywordsChange`/`ICardTraitChanges` interfaces
-- Logging migrated from minlog → **tinylog** (`org.tinylog.Logger`)
+**API changes already in codebase (no longer pending):**
+- `Card.keywordsToText()` is **private** — use `hasKeyword()` or `getKeywords()` instead
+- `ComputerUtil.handlePlayingSpellAbility` — `Game` param removed
+- `GlobalAttackRestrictions` — `Integer` (nullable) instead of `int`
+- `CardType.CoreType` enum used in type analysis
+- Logging is **tinylog** (`org.tinylog.Logger`) throughout
+- `AiController` calls `removeUnpayableAttackers(Combat)` after `declareAttackers` — B2 attack targeting must account for this
 
-**New pattern in attack flow:**
-- `AiController` now calls `removeUnpayableAttackers(Combat)` after `declareAttackers` — validates AI can pay attack costs (Propaganda, etc.). Our B2 attack targeting integration must account for this post-declaration validation step.
-
-**Impact on GameSimulator (C1):**
-- Minor API updates (`handlePlayingSpellAbility` signature, `GameCopier` type methods) but no structural changes. Multiplayer fix scope unchanged.
+**GameSimulator (C1) — confirmed:**
+- Multiplayer TODO comment at line 262: `"This needs to set an AI controller for all opponents, in case of multiplayer."`
+- No structural changes from upstream; fix scope unchanged.
 
 ---
 

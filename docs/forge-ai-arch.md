@@ -58,13 +58,14 @@ The forge-ai module implements an AI player that can:
 ```
 forge-ai/
 └── src/main/java/forge/ai/
-    ├── Core Controllers (24 files)
-    │   ├── PlayerControllerAi.java (1,650 lines) - Main AI interface
-    │   ├── AiController.java - AI "brain"
-    │   ├── AiAttackController.java - Attack logic
-    │   ├── AiBlockController.java - Block logic
+    ├── Core Controllers (24+ files)
+    │   ├── PlayerControllerAi.java (1,653 lines) - Main AI interface
+    │   ├── AiController.java (2,383 lines) - AI "brain"
+    │   ├── AiAttackController.java (1,770 lines) - Attack logic
+    │   ├── AiBlockController.java (1,378 lines) - Block logic
+    │   ├── AiCache.java - Caches AI calculations for performance
     │   └── ...
-    ├── ability/ (150+ AI implementations, ~29,000 lines)
+    ├── ability/ (151 AI implementations, ~29,000 lines)
     │   ├── CounterAi.java - Counterspell logic
     │   ├── DamageDealAi.java - Burn spell logic
     │   ├── DestroyAi.java - Removal logic
@@ -82,7 +83,7 @@ forge-ai/
 **PlayerControllerAi** (`PlayerControllerAi.java:1`)
 - Extends `PlayerController` from forge-game
 - Acts as the AI's interface to the game engine
-- Implements all player decision methods (1,650+ lines)
+- Implements all player decision methods (1,653+ lines)
 - Handles: mulligans, targeting, blocking, attacking, card choices, sideboarding
 
 #### 2. Strategic Layer
@@ -105,7 +106,7 @@ forge-ai/
 - Returns `AiAbilityDecision` (rating + reason)
 
 #### 4. Ability-Specific Layer
-**150+ AI implementations** in `ability/` package
+**151 AI implementations** in `ability/` package
 - One specialized AI class per effect type
 - Examples:
   - `CounterAi` - Counterspell decisions
@@ -404,9 +405,9 @@ forge-gui-* (User Interfaces)
 
 ## Key Statistics
 
-- **Total Java Files**: 174
-- **Core Controllers**: 24 files
-- **Ability AI Implementations**: 150+ files
+- **Total Java Files**: 187
+- **Core Controllers**: 24+ files
+- **Ability AI Implementations**: 151 files
 - **Total Lines of Code**: ~29,000+ in ability package alone
 - **Largest Modules**:
   - `ChangeZoneAi.java` - 96KB

@@ -74,8 +74,8 @@ forge-core/
     │   └── MulliganDefs.java - Mulligan rules
     │
     ├── card/ (32 files, ~7,113 lines)
-    │   ├── CardDb.java (1,277 lines) - Card database
-    │   ├── CardRules.java (938 lines) - Card rules parser
+    │   ├── CardDb.java (1,276 lines) - Card database
+    │   ├── CardRules.java (875 lines) - Card rules parser
     │   ├── CardType.java (1,105 lines) - Type system
     │   ├── CardEdition.java - Edition/set management
     │   ├── ColorSet.java - Color identity
@@ -111,7 +111,7 @@ forge-core/
 ```
 
 ### Statistics
-- **Total Files**: 153 Java files
+- **Total Files**: 146 Java files
 - **Total Lines**: ~26,069 lines of code
 - **Packages**: 14 major packages
 
@@ -192,7 +192,7 @@ public Collection<PaperCard> getAllCards(String cardName)
 
 ### 3. CardRules - Card Rule Representation
 
-**File**: `CardRules.java:1` (938 lines)
+**File**: `CardRules.java:1` (875 lines)
 
 **Purpose**: Immutable representation of a card's rules and characteristics
 
@@ -590,14 +590,14 @@ if (type.hasSubtype("Dragon")) {
 
 ## Key Statistics
 
-- **Total Files**: 153 Java files
+- **Total Files**: 146 Java files
 - **Total Lines**: ~26,069 lines
 - **Packages**: 14 packages
 - **Largest Files**:
-  - CardDb.java: 1,277 lines
+  - CardDb.java: 1,276 lines
   - CardType.java: 1,105 lines
-  - StaticData.java: 1,012 lines
-  - CardRules.java: 938 lines
+  - StaticData.java: 1,011 lines
+  - CardRules.java: 875 lines
   - Deck.java: 707 lines
   - PaperCard.java: 708 lines
 

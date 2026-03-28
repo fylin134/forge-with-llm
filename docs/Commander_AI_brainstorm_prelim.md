@@ -17,9 +17,9 @@ Build or improve a 3 AI + 1 human player Commander game simulator in Forge, leve
 
 ### ❌ Critical Gaps in Multiplayer Commander AI
 
-1. Random opponent selection - Above 8 life, AI picks targets randomly (AiAttackController.java:195-230)
-2. Primitive threat assessment - Only considers life total, ignores board state/card advantage (ComputerUtil.java:2852)
-3. Broken simulation engine - Hardcoded for 2 players, can't look ahead in multiplayer (GameSimulator.java:226, 262)
+1. Random opponent selection - Above 8 life, AI picks targets randomly (`AiAttackController.java` ~line 229)
+2. Primitive threat assessment - Only considers life total, ignores board state/card advantage (`ComputerUtil.java`)
+3. Broken simulation engine - Hardcoded for 2 players, can't look ahead in multiplayer (`GameSimulator.java` line 262 has explicit TODO)
 4. No politics/diplomacy - Zero "who's winning" awareness, no temporary alliances
 5. No Commander-specific strategy - Doesn't track commander damage toward 21, no voltron awareness
 6. Multiple TODO comments - Code explicitly acknowledges these limitations
@@ -40,14 +40,14 @@ Priority → PlayerControllerAi.chooseSpellAbilityToPlay()
 
 ### Key Decision Points
 
-| Decision   | File                    | Method                        | Line |
-|------------|-------------------------|-------------------------------|------|
-| Main loop  | AiController.java       | chooseSpellAbilityToPlay()    | 1359 |
-| Spell eval | AiController.java       | canPlaySa()                   | 899  |
-| Mulligan   | PlayerControllerAi.java | mulliganKeepHand()            | 779  |
-| Attacks    | AiAttackController.java | declareAttackers()            | 804  |
-| Blocks     | AiBlockController.java  | assignBlockersForCombat()     | 997  |
-| Targeting  | PlayerControllerAi.java | chooseSingleEntityForEffect() | 352  |
+| Decision   | File                    | Method                        | Notes |
+|------------|-------------------------|-------------------------------|-------|
+| Main loop  | AiController.java       | chooseSpellAbilityToPlay()    | AiController is now 2,383 lines |
+| Spell eval | AiController.java       | canPlaySa()                   | — |
+| Mulligan   | PlayerControllerAi.java | mulliganKeepHand()            | — |
+| Attacks    | AiAttackController.java | declareAttackers()            | Random fallback ~line 229 |
+| Blocks     | AiBlockController.java  | assignBlockersForCombat()     | — |
+| Targeting  | PlayerControllerAi.java | chooseSingleEntityForEffect() | — |
 
 ### Architecture Pattern
 
@@ -147,7 +147,7 @@ Priority → PlayerControllerAi.chooseSpellAbilityToPlay()
 
 ### Your Setup
 
-- ✅ Working directory: /Users/franklin/Projects/forge/docs
+- ✅ Working directory: forge-with-llm/docs
 - ✅ Repository already cloned
 - ✅ LLM experience: Mid-level
 - ✅ API preference: Claude API
@@ -175,14 +175,14 @@ Priority → PlayerControllerAi.chooseSpellAbilityToPlay()
 
 ### Documentation
 
-- /Users/franklin/Projects/forge/docs/AI.md - AI system overview, simulation syntax
-- /Users/franklin/Projects/forge/docs/Development/IntelliJ-setup/IntelliJ-setup.md - Dev environment setup
-- /Users/franklin/Projects/forge/docs/Development/ownership.md - AI subsystem owners (Hanmac, Agetian)
+- forge-with-llm/docs/AI.md - AI system overview, simulation syntax
+- forge-with-llm/docs/Development/IntelliJ-setup/IntelliJ-setup.md - Dev environment setup
+- forge-with-llm/docs/Development/ownership.md - AI subsystem owners (Hanmac, Agetian)
 
 ### AI Source Code
 
-- /Users/franklin/Projects/forge/forge-ai/src/main/java/forge/ai/
-  - AiController.java - Main AI brain (1,650 lines)
+- forge-with-llm/forge-ai/src/main/java/forge/ai/
+  - AiController.java - Main AI brain (2,383 lines)
   - AiAttackController.java - Combat decisions (1,770 lines)
   - AiBlockController.java - Blocking decisions (1,378 lines)
   - ComputerUtil.java - Utility functions including threat assessment
@@ -191,14 +191,14 @@ Priority → PlayerControllerAi.chooseSpellAbilityToPlay()
 
 ### Game Engine
 
-- /Users/franklin/Projects/forge/forge-game/src/main/java/forge/game/
+- forge-with-llm/forge-game/src/main/java/forge/game/
   - player/Player.java - Player state (line 188-191: commander tracking)
   - GameType.java - Format definitions
   - GameRules.java - Rules engine
 
 ### Deck Validation
 
-- /Users/franklin/Projects/forge/forge-core/src/main/java/forge/deck/DeckFormat.java - Commander validation (lines 68-361)
+- forge-with-llm/forge-core/src/main/java/forge/deck/DeckFormat.java - Commander validation (lines 68-361)
 
 ---
 ## Testing Strategy
