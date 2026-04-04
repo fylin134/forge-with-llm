@@ -33,9 +33,9 @@ The forge-game module provides:
     <artifactId>forge-core</artifactId>      <!-- Card data, utilities -->
 </dependency>
 <dependency>
-    <groupId>com.googlecode</groupId>
-    <artifactId>minlog</artifactId>
-    <version>1.2</version>                   <!-- Lightweight logging -->
+    <groupId>org.tinylog</groupId>
+    <artifactId>tinylog-api</artifactId>
+    <version>2.x</version>                   <!-- Lightweight logging (migrated from minlog) -->
 </dependency>
 <dependency>
     <groupId>io.sentry</groupId>
@@ -72,7 +72,7 @@ The forge-game module provides:
 forge-game/
 └── src/main/java/forge/game/
     ├── Core (37 classes)
-    │   ├── Game.java (1,390 lines) - Central game state
+    │   ├── Game.java (1,386 lines) - Central game state
     │   ├── GameAction.java - Zone changes, state-based actions
     │   ├── Match.java - Multi-game matches
     │   ├── PhaseHandler.java - Turn/phase management
@@ -88,7 +88,7 @@ forge-game/
     │       └── ... (200+ more)
     │
     ├── card/ (27 classes)
-    │   ├── Card.java (8,339 lines) - Individual card instances
+    │   ├── Card.java (8,204 lines) - Individual card instances
     │   ├── CardState.java - Card faces/states
     │   ├── CardCollection.java - Card collections
     │   └── token/ - Token creation
@@ -102,13 +102,13 @@ forge-game/
     ├── trigger/ (137 classes)
     │   ├── TriggerHandler.java - Trigger detection/resolution
     │   ├── Trigger.java - Base trigger class
-    │   └── 134+ specific triggers (TriggerAttacks, TriggerDamageDone, etc.)
+    │   └── 146+ specific triggers (TriggerAttacks, TriggerDamageDone, etc.)
     │
     ├── staticability/ (59 classes)
     │   ├── StaticAbility.java - Continuous effects
     │   └── StaticAbilityContinuous.java - Layer-based effects
     │
-    ├── replacement/ (46 classes)
+    ├── replacement/ (40 classes)
     │   ├── ReplacementHandler.java - Replacement effects
     │   └── ReplacementEffect.java - Base class + implementations
     │
@@ -155,16 +155,16 @@ forge-game/
 ```
 
 ### Statistics
-- **Total Files**: 757 Java files
+- **Total Files**: 786 Java files
 - **Core Classes**: 37 in main package
-- **Effect Implementations**: 203
-- **Trigger Types**: 134
+- **Effect Implementations**: 202
+- **Trigger Types**: 146
 - **Static Ability Types**: 59
-- **Replacement Effect Types**: 46
+- **Replacement Effect Types**: 40
 - **Largest Classes**:
-  - Card.java: 8,339 lines
-  - Player.java: 4,077 lines
-  - Game.java: 1,390 lines
+  - Card.java: 8,204 lines
+  - Player.java: 4,073 lines
+  - Game.java: 1,386 lines
 
 ---
 
@@ -245,7 +245,7 @@ PRIORITY SYSTEM:
 
 ## Key Components
 
-### 1. Game.java (1,390 lines)
+### 1. Game.java (1,386 lines)
 
 **Purpose**: Central orchestrator of the entire game
 
@@ -279,7 +279,7 @@ private final GameView view;                  // Read-only view for UI
 - Ring bearer (LotR mechanic)
 - City's Blessing (Ascend)
 
-### 2. Card.java (8,339 lines!)
+### 2. Card.java (8,204 lines!)
 
 **Purpose**: Represents a single card instance in the game
 
@@ -312,7 +312,7 @@ private Map<Long, KeywordsChange> changedCardKeywords;
 
 Implements the comprehensive rules layer system for continuous effects.
 
-### 3. Player.java (4,077 lines)
+### 3. Player.java (4,073 lines)
 
 **Purpose**: Represents a player in the game
 
@@ -391,7 +391,7 @@ Each item is a `SpellAbilityStackInstance` containing:
 
 **Purpose**: Detects and manages triggered abilities
 
-**134 Trigger Types** (examples):
+**146 Trigger Types** (examples):
 - `TriggerAttacks` - When creature attacks
 - `TriggerDamageDone` - When damage is dealt
 - `TriggerChangesZone` - When card changes zones
@@ -415,7 +415,7 @@ Each item is a `SpellAbilityStackInstance` containing:
 
 **Purpose**: Processes replacement effects
 
-**46 Replacement Types** (examples):
+**40 Replacement Types** (examples):
 - `ReplaceDamage` - Prevent/modify damage
 - `ReplaceDraw` - Replace card draws
 - `ReplaceDiscard` - Replace discards
@@ -803,21 +803,21 @@ Every object and effect has a timestamp. Used for effect ordering within same la
 
 ## Key Statistics
 
-- **Total Files**: 757 Java files
+- **Total Files**: 786 Java files
 - **Estimated Lines**: 100,000+ lines of code
-- **Effect Types**: 200+ (ApiType enum)
-- **Trigger Types**: 134
+- **Effect Types**: 202 (ApiType enum)
+- **Trigger Types**: 146
 - **Static Ability Types**: 59
-- **Replacement Effect Types**: 46
+- **Replacement Effect Types**: 40
 - **Cost Types**: 40+
 - **Zone Types**: 11+ (including variant zones)
 - **Game Event Types**: 61
 - **Keywords Supported**: 100+ (Flying, Trample, Hexproof, etc.)
 
 **Largest Files**:
-- Card.java: 8,339 lines
-- Player.java: 4,077 lines
-- Game.java: 1,390 lines
+- Card.java: 8,204 lines
+- Player.java: 4,073 lines
+- Game.java: 1,386 lines
 - ApiType.java: 246 lines (just the enum!)
 
 ---
