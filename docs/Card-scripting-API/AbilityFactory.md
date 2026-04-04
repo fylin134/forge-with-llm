@@ -78,7 +78,7 @@ Prevents text-changing effects from affecting the ability.
 
 Only needed if the card text doesn't contain the type/color words but the ability still needs to use them (e.g. "for each color ...").
 
-## AI params
+## Generic AI params
 * `IsCurse$ True` - for effects that are normally treated positive e.g. Pump
 
 * `AICheckSVar$ {Count}`
@@ -318,7 +318,7 @@ This follows our general approach where we try to find a reasonable middle groun
 
 ## Fight
 
-## FlipACoin
+## FlipCoin
 
 ## Fog
 This AF is based on the original *Fog* spell: "Prevent all combat damage that would be dealt this turn." While this could be done with an Effect, the specialized nature of the AI gives it its own AF.
